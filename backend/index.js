@@ -3,13 +3,19 @@ import process from 'node:process';
 import mongoose from 'mongoose';
 import registerROutes from '../backend/src/modules/routes/registrationRoutes.js';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+console.log('MONGO_URL from env:', process.env.MONGO_URL);
+
 async function connect() {
   try{
-  await mongoose.connect ('mongodb+srv://pedrojuana08_db_user:k5D2DtugxMDQ4AIU@cluster1.pvtxe6n.mongodb.net/chat');
+  await mongoose.connect (process.env.MONGO_URL);
   console.log('✅ Connected Successfully');
 } catch (err) {
   console.error('👎Unable to connect:', err);
